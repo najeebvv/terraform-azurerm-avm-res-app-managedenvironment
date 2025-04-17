@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azapi_resource" "this_environment" {
-  type = "Microsoft.App/managedEnvironments@2025-01-01"
+  type = "Microsoft.App/managedEnvironments@2024-10-02-preview"
   body = {
     properties = merge({
       appLogsConfiguration = {
