@@ -47,13 +47,12 @@ resource "azapi_resource" "this_environment" {
   }
   location  = var.location
   name      = var.name
-  identity = var.identity == null ? null : {
-    type = var.identity.type
-    userAssignedIdentities = (
-      var.identity.type == "UserAssigned" && length(var.identity.userAssignedIdentities) > 0 ?
-      { for identity in var.identity.userAssignedIdentities : identity => {} } :
-      null
-    )
+  dynamic "identity" {
+    for_each = var.identity == null ? [] : [var.identity]
+    content {
+      type = each.value.type
+      identity_ids = each.value.type == "UserAssigned" ? { for id in identity.value.userAssignedIdentities : id => {} } : null
+    }
   }
   parent_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
   response_export_values = [
