@@ -46,7 +46,7 @@ resource "azapi_resource" "this_environment" {
   dynamic "identity" {
     for_each = var.identity == null ? [] : [var.identity]
     content {
-      type = identity.type
+      type = identity.value.type
       identity_ids = identity.value.type == "UserAssigned" ? { for id in identity.value.userAssignedIdentities : id => {} } : null
     }
   }
