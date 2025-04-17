@@ -36,7 +36,6 @@ variable "dapr_application_insights_connection_string" {
 }
 
 variable "identity" {
-  type        = {}
   default     = {}
   description = "Identity."
 }
