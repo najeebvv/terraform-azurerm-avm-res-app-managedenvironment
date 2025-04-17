@@ -41,13 +41,13 @@ variable "identity" {
   description = "Identity."
 }
 
-variable "managed_identity_id" {
+variable "custom_domain_certificate_identity_id" {
   type        = string
   default     = null
-  description = "managed_identity_id."
+  description = "custom_domain_certificate_identity_id."
 }
 
-variable "custom_domain_keyvault_uri" {
+variable "custom_domain_certificate_keyvault_uri" {
   type        = string
   default     = null
   description = "custom_domain_keyvault_uri."
