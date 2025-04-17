@@ -46,8 +46,8 @@ resource "azapi_resource" "this_environment" {
   dynamic "identity" {
     for_each = var.identity == null ? [] : [var.identity]
     content {
-      type = each.value.type
-      identity_ids = each.value.type == "UserAssigned" ? { for id in identity.value.userAssignedIdentities : id => {} } : null
+      type = identity.type
+      identity_ids = identity.type == "UserAssigned" ? { for id in identity.userAssignedIdentities : id => {} } : null
     }
   }
   parent_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
