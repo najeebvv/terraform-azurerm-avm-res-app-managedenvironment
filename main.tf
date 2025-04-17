@@ -47,7 +47,7 @@ resource "azapi_resource" "this_environment" {
     for_each = var.identity == null ? [] : [var.identity]
     content {
       type = identity.value.type
-      identity_ids = identity.value.type == "UserAssigned" ? { for id in identity.value.userAssignedIdentities : id => {} } : null
+      identity_ids = try(identity.value.identity_ids, [])
     }
   }
   parent_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
