@@ -41,18 +41,6 @@ variable "identity" {
   description = "Identity."
 }
 
-variable "custom_domain_certificate_identity_id" {
-  type        = string
-  default     = null
-  description = "custom_domain_certificate_identity_id."
-}
-
-variable "custom_domain_certificate_keyvault_uri" {
-  type        = string
-  default     = null
-  description = "custom_domain_keyvault_uri."
-  sensitive   = true
-}
 variable "diagnostic_settings" {
   type = map(object({
     name                                     = optional(string, null)
