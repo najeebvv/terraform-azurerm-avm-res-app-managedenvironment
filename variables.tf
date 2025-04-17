@@ -35,6 +35,24 @@ variable "dapr_application_insights_connection_string" {
   sensitive   = true
 }
 
+variable "identity" {
+  type        = string
+  default     = null
+  description = "Identity."
+}
+
+variable "managed_identity_id" {
+  type        = string
+  default     = null
+  description = "managed_identity_id."
+}
+
+variable "custom_domain_keyvault_uri" {
+  type        = string
+  default     = null
+  description = "custom_domain_keyvault_uri."
+  sensitive   = true
+}
 variable "diagnostic_settings" {
   type = map(object({
     name                                     = optional(string, null)

@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azapi_resource" "this_environment" {
-  type = "Microsoft.App/managedEnvironments@2024-03-01"
+  type = "Microsoft.App/managedEnvironments@2025-01-01"
   body = {
     properties = merge({
       appLogsConfiguration = {
@@ -12,6 +12,10 @@ resource "azapi_resource" "this_environment" {
         } : null
       }
       customDomainConfiguration = {
+        certificateKeyVaultProperties = {
+          identity = var.managed_identity_id
+          keyVaultUrl = var.custom_domain_keyvault_uri
+        }
         "certificatePassword" = var.custom_domain_certificate_password
         "dnsSuffix"           = var.custom_domain_dns_suffix
       }
@@ -43,6 +47,14 @@ resource "azapi_resource" "this_environment" {
   }
   location  = var.location
   name      = var.name
+  identity = var.identity == null ? null : {
+    type = var.identity.type
+    userAssignedIdentities = (
+      var.identity.type == "UserAssigned" && length(var.identity.userAssignedIdentities) > 0 ?
+      { for identity in var.identity.userAssignedIdentities : identity => {} } :
+      null
+    )
+  }
   parent_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
   response_export_values = [
     "properties.customDomainConfiguration",
