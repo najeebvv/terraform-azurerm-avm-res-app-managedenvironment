@@ -12,10 +12,6 @@ resource "azapi_resource" "this_environment" {
         } : null
       }
       customDomainConfiguration = {
-        certificateKeyVaultProperties = {
-          identity = var.custom_domain_certificate_identity_id
-          keyVaultUrl = var.custom_domain_certificate_keyvault_uri
-        }
         "certificatePassword" = var.custom_domain_certificate_password
         "dnsSuffix"           = var.custom_domain_dns_suffix
       }
